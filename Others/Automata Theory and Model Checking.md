@@ -84,7 +84,7 @@ We use NBW and DBW to abbreviate nondeterministic and deterministic Büchi autom
 
 Example 1 Consider the DBW A1 appearing in Fig. 1. When we draw automata, states are denoted by circles. Directed edges between states are labeled with letters and describe the transitions. Initial states (q0, in the ﬁgure) have an edge entering them with no source, and accepting states (q1, in the ﬁgure) are identiﬁed by double circles. The DBW moves to the accepting state whenever it reads the letter a, and it moves to the non-accepting state whenever it reads the letter b. Accordingly, the singlerun r onawordw visits the accepting state inﬁnitely often iff w has inﬁnitely many a’s. Hence, L (A1)={w:w has inﬁnitely many a’s}.
 
-**例1。** 考察图1中出现的DBW $A_1$。当我们绘制自动机时，状态用圆圈表示。状态之间的有向边用字母标记以描述转移。初始状态(图中为$q_0$)有一条不带源点的边，可接受状态(图中为$q_1$)由双圆圈标识。当DBW读到字母a时，就会转移到可接受状态，当它读到字母b时，就会移动到不可接受状态。因此，$\mathcal{L(A_1)}=\{w:w \ has \ infinity \ many \ a's\}$。
+**例1** 考察图1中出现的DBW $A_1$。当我们绘制自动机时，状态用圆圈表示。状态之间的有向边用字母标记以描述转移。初始状态(图中为$q_0$)有一条不带源点的边，可接受状态(图中为$q_1$)由双圆圈标识。当DBW读到字母a时，就会转移到可接受状态，当它读到字母b时，就会移动到不可接受状态。因此，$\mathcal{L(A_1)}=\{w:w \ has \ infinity \ many \ a's\}$。
 
 <center>
 <img src='../_imgs/2/1.png'>
@@ -94,7 +94,7 @@ Example 1 Consider the DBW A1 appearing in Fig. 1. When we draw automata, states
 
 Example 2 Consider the NBW A2 appearing in Fig. 2. The automaton is nondeterministic, and in order for a run to be accepting it has to eventually move to the accepting state, where it has to stay forever while reading b. Note that if A2 reads a from the accepting state it gets stuck. Accordingly, A2 has an accepting run on a wordw iff w has a position from which an inﬁnite tail of b’s starts. Hence, L (A2)={w:w has only ﬁnitely many a’s}.
 
-**例2。** 考虑图2中出现的NBW $A_2$。这个自动机是非确定性的，为了让运行是可接受的，它最终必须转移到可接受状态，在读取b时它必须永远停留在那里。注意，如果$A_2$从接受状态读取a，它就会被卡住。因此，A2在字w上有一个可接受的运行，当且仅当w从某一位置开始有无限长的b组成的的尾部。因此，$\mathcal{L(A2)}=\{w:w \ has \ only \ finity \ many \ a's\}$。
+**例2** 考虑图2中出现的NBW $A_2$。这个自动机是非确定性的，为了让运行是可接受的，它最终必须转移到可接受状态，在读取b时它必须永远停留在那里。注意，如果$A_2$从接受状态读取a，它就会被卡住。因此，A2在字w上有一个可接受的运行，当且仅当w从某一位置开始有无限长的b组成的的尾部。因此，$\mathcal{L(A2)}=\{w:w \ has \ only \ finity \ many \ a's\}$。
 
 <center>
 <img src='../_imgs/2/2.png'>
@@ -128,9 +128,122 @@ Theorem 1 ([8]) Let A1 and A2 be NBWs with n1 and n2 states, respectively. There
 
 Proof Let A1 =Σ,Q1,Q0 1,δ1,α1 and A2 =Σ,Q2,Q0 2,δ2,α2. We assume,without loss of generality, that Q1 and Q2 are disjoint. Since nondeterministic automata may have several initial states, we can deﬁne A as the NBW obtained by taking the union of A1 and A2. Thus, A =Σ,Q1∪Q2,Q0 1∪Q0 2,δ,α1∪α2,where for every state q ∈Q1 ∪Q2, we have thatδ(q,σ)=δi(q,σ), for the indexi ∈{1,2}suchthat q ∈Qi.It is easy to see that for every word w∈Σω,the NBW A has an accepting run on w iff at least one of the NBWs A1 and A2 has an accepting run on w.
 
-证明，设$A_1=\langle\Sigma,Q_1,Q_{01},\delta_1,\alpha_1\rangle$以及$A_2=\langle\Sigma,Q_2,Q_{02},\delta_2,\alpha_2\rangle$。 在不失一般性的前提下，我们假设$Q_1$和$Q_2$是不交的。 由于非确定性自动机可以具有若干个初始状态，因此我们可以将$A$定义为通过将$A_1$和$A_2$做并运算得到的NBW。 因此，$A=\langle \Sigma,Q_1 \cup Q_2,Q_{01} \cup Q_{02},\delta,\alpha_1\cup\alpha_2 \rangle$，其中对于每个状态$q \in Q_1 \cup Q_2$，我们有$\delta(q,\sigma)=\delta_i(q,\sigma)$，索引$i\in\{1,2\}$使得$q\in Q_i$。很容易看到，对于每个字$w \in \Sigma^\omega$，NBW $A$在$w$上有一个可接受的运行，当且仅当NBW $A_1$和$A_2$中至少有一个在$w$上有一个可接受的运行。
+证明，设$A_1=\langle\Sigma,Q_1,Q^0_1,\delta_1,\alpha_1\rangle$以及$A_2=\langle\Sigma,Q_2,Q^0_2,\delta_2,\alpha_2\rangle$。 在不失一般性的前提下，我们假设$Q_1$和$Q_2$是不交的。 由于非确定性自动机可以具有若干个初始状态，因此我们可以将$A$定义为通过将$A_1$和$A_2$做并运算得到的NBW。 因此，$A=\langle \Sigma,Q_1 \cup Q_2,Q^0_1 \cup Q^0_2,\delta,\alpha_1\cup\alpha_2 \rangle$，其中对于每个状态$q \in Q_1 \cup Q_2$，我们有$\delta(q,\sigma)=\delta_i(q,\sigma)$，索引$i\in\{1,2\}$使得$q\in Q_i$。很容易看到，对于每个字$w \in \Sigma^\omega$，NBW $A$在$w$上有一个可接受的运行，当且仅当NBW $A_1$和$A_2$中至少有一个在$w$上有一个可接受的运行。
 
 We proceed to closure under intersection. For the case of ﬁnite words, one proves closure under intersection by constructing, given A1 and A2, a “productautomaton” that has Q1×Q2 as its state space and simulates the runs of both A1 and A2 on the input words. A word is then accepted by both A1 and A2 iff the product automaton has a run that leads to a state in α1×α2. As the example below demonstrates, this construction does not work for Büchi automata.
 
 接下来我们看看在交运算下的封闭性。对于有限字下的自动机，可以这样来证明交运算的封闭性，给定$A_1$和$A_2$的情况下构造一个以$Q1×Q2$作为其状态空间的“乘积自动机”，并在输入字上模拟$A_1$和$A_2$的运行，来证明交运算下的封闭性。 $A_1$和$A_2$都接受一个字当且仅当乘积自动机运行到$\alpha_1 \times \alpha_2$的状态。 如下例所示，此构造不适用于Büchi自动机。
 
+Example 3 Consider the two DBWs A1 and A2 on the left of Fig. 3. The product automaton A1×A2 is shown on the right. Clearly, L (A1)=L (A2)={aω}, but L (A1×A2)=∅
+
+**例3** 考虑图3左侧的两个DBW $A_1$和$A_2$。乘积自动机$A_1 \times A_2$显示在右侧。 显然，$\mathcal{L(A_1)}=
+\mathcal{L(A_2)}=\{a^\omega\}$，但是$\mathcal{L(A_1\times A_2)}=\phi$。
+
+<center>
+<img src='../_imgs/2/3.png'>
+
+图3：两个接受语言$\{a^\omega\}$的Büchi自动机，以及它们为空的乘积
+</center>
+
+As demonstrated in Example 3, the problem with the product automaton is that the deﬁnition of the set of accepting states to be α1×α2 forces the accepting runs of A1 and A2 to visit α1 and α2 simultaneously. This requirement is too strong, as an input word may still be accepted by both A1 and A2, but the accepting runs on it visit α1 and α2 in different positions. As we show below, the product automaton is a good basis for proving closure under intersection, but one needs to take two copies of it: one that waits for visits of runs of A1 to α1 (and moves to the second copy when such a visit is detected) and one that waits for visits of runs of A2 to α2 (and returns to the ﬁrst copy when such a visit is detected). The acceptance condition then requires the run to alternate between the two copies inﬁnitely often, which is possible exactly when both the run of A1 visits α1 inﬁnitely often, and the run of A2 visits α2 inﬁnitely often. Note that A2 may visit α2 when the run is in the ﬁrst copy, in which case the visit to α2 is ignored, and in fact this may happen inﬁnitely many times. Still, if there are inﬁnitely many visits to α1 and α2, then eventually the run moves to the second copy, where it eventually comes across a visit to α2 that is not ignored. Formally, we have the following.
+
+如例3所示，乘积自动机的问题在于，将一组接受状态定义为$\alpha_1 \times \alpha_2$会迫使$A_1$和$A_2$的可接受运行同时访问$\alpha_1$和$\alpha_2$。这个要求过强了，因为输入的单词可能仍然被$A_1$和$A_2$都接受，但是接受它的运行在不同的位置访问了$\alpha_1$和$\alpha_2$。正如我们接下来要看到的，乘积自动机是证明在交运算下封闭的良好基础，但是一个乘积需要复制两个副本：一个等待在$A_1$上访问$\alpha_1$的运行（并在检测到这种访问时，移至第二个副本）和一个等待$A_2$上访问$\alpha_2$的运行（并在检测到这种访问时，返回到第一个副本）。然后，接受条件要求可接受运行在两个副本之间无限经常次交替，这正是在说$A_1$无限经常次访问$\alpha_1$，并且$A_2$无限经常次访问$\alpha_2$。请注意，当运行在第一个副本中时，$A_2$可能会访问$\alpha_2$，在这种情况下，对$\alpha_2$的访问将被忽略，实际上，这可能会无限次发生。但是，假设无限经常此访问了$\alpha_1$和$\alpha_2$，最终运行移动到了第二个副本，在该副本中最终会遇到对$\alpha_2$的访问，这是不可忽略的。形式上，有如下陈述。
+
+Theorem 2 ([8]) Let A1 and A2 be NBWs with n1 and n2 states, respectively. There is an NBW A such that L (A )=L (A1)∩L(A2) and A has 2n1n2 states. 
+
+**定理2** 令$A_1$和$A_2$分别是状态数目为$n_1$和$n_2$的NBW。 存在一个NBW $A$，使得$\mathcal{L(A)}=\mathcal{L(A_1)} \cap \mathcal{L(A_2)}$，且$A$具有$2 n_1 n_2$个状态。
+
+Proof Let A1 =Σ,Q1,Q0 1,δ1,α1 and A2 =Σ,Q2,Q0 2,δ2,α2. We deﬁne A =Σ,Q,Q0,δ,α, where
+
+证明，设$A_1=\langle\Sigma,Q_1,Q^0_1,\delta_1,\alpha_1\rangle$以及$A_2=\langle\Sigma,Q_2,Q^0_2,\delta_2,\alpha_2\rangle$。 定义$A=\langle\Sigma,Q,Q^0,\delta,\alpha\rangle$，其中
+
+Q = Q1 ×Q2 ×{ 1,2}. That is, the state space consists of two copies of theproduct automaton.
+
+- $Q=Q_1 \times Q_2 \times \{1,2\}$。 也就是说，状态空间由乘积自动机的两个副本组成。
+
+Q0 =Q0 1×Q0 2×{1}. That is, the initial states are tripless1,s2,1 such that s1and s2 are initial in A1 and A2, respectively. The run starts in the ﬁrst copy. 
+
+- $Q^0=Q^0_1 \times Q^0_2 \times \{1\}$。 即是说，初始状态是三元组$\langle s_1,s_2,1 \rangle$，其中$s_1$和$s_2$分别在$A_1$和$A_2$中是初始状态。 运行从第一个副本中开始。
+
+For all q1 ∈Q1, q2 ∈Q2, c ∈{ 1,2}, and σ ∈Σ, we deﬁne δ(s1,s2,c,σ)= δ1(s1,σ)×δ2(s2,σ)×{next(s1,s2,c)}, where
+
+- 对于所有$q_1 \in Q_1$，$q_2 \in Q_2$，$c \in \{1,2\}$，以及$\sigma \in \Sigma$，我们定义$\delta(\langle s_1,s_2,c \rangle,\sigma)=\delta_1(s_1,\sigma) \times \delta_2(s_2,\sigma) \times \{next(s_1,s_2,c)\}$，其中
+
+next(s1,s2,c)= 1 if ( c=1 and s1 / ∈α1) or ( c=2 and s2∈α2),2 if ( c=1 and s1∈α1) or ( c=2 and s2 / ∈α2). 
+
+$$
+\begin{aligned}
+next(s_1,s_2,c)=
+    \left[
+        \begin{array}{lr}
+            1 \ \ \ if(c=1 \ and \ s_1 \notin \alpha_1) \ or \ 
+            (c=2 \ and \ s_2 \in \alpha_2), \\
+            2 \ \ \ if(c=1 \ and \ s_1 \in \alpha_1) \ or \ 
+            (c=2 \ and \ s_2 \notin \alpha_2).
+        \end{array}
+    \right.
+\end{aligned}
+$$
+
+That is, A proceeds according to the product automaton, and it moves from the ﬁrst copy to the second copy when s1∈α1, and from the second copy to the ﬁrst copy when s2∈α2. In all other cases it stays in the current copy.
+
+也就是说，$A$根据乘积自动机运行，当$s_1 \in \alpha_1$时，它从第一副本移动到第二副本，而当$s_2 \in \alpha_2$时，它从第二副本移动到第一副本。 在所有其他情况下，它将保留在当前副本中。
+
+α =α1 ×Q2 ×{1}. That is, a run of A is accepting if it visits inﬁnitely many states in the ﬁrst copy in which the Q1-component is in α1. Note that after such a visit, A moves to the second copy, from which it returns to the ﬁrst copy after visiting a state in which the Q2-component is in α2. Accordingly, there must be a visit to a state in which the Q2-component is in α2 between every two successive visits to states in α. This is why a run visits α inﬁnitely often iff its Q1-component visits α1 inﬁnitely often and its Q2-component visits α2 inﬁnitely often.
+
+$\alpha=\alpha_1 \times Q_2 \times \{1\}$。 也就是说，如果$A$遍历了第一个副本中的无穷多个状态，保证$Q_1$分量处在$α_1$中，则$A$是可接受运行。 请注意，在这样的访问之后，$A$将移动至第二个副本，在访问了$Q_2$分量处于$\alpha_2$中的状态后，它将从第二个副本返回第一个副本。 因此，必须在每两次连续访问$\alpha$中的状态之间访问$Q_2$分量处于$\alpha_2$中的状态。 这就是为什么运行无限经常此访问$\alpha$，当且仅当其$Q_1$成分无限经常次$\alpha_1$以及$Q_2$成分无限经常次访问$\alpha_2$。
+
+Note that the product construction retains determinism; i.e., starting with deterministic A1 and A2, the product A is deterministic. Thus, DBWs are also closed under intersection. Also, while the union construction we have described does not retain determinism, DBWs are closed also under union. Indeed, if we take the product construction (one copy of it is sufﬁcient), which retains determinism, and deﬁne the set of accepting states to be (α1×Q2)∪(Q1×α2),we get a DBW for the union. Note, however, that unlike the n1+n2 blow-up in Theorem 1, the blow-up now is n1n2.
+
+请注意，构造出的乘积保留确定性。 即，从确定性的$A_1$和$A_2$开始，乘积$A$是确定性的。 因此，DBW对交运算也是封闭的。 同样，尽管我们描述的并运算并没有保持确定性，但是DBW也在并下封闭。 的确，如果我们采用保留确定性的乘积结构（一个副本足够），并且将接受状态的集合定义为$(\alpha_1 \times Q_2) \cup (Q_1 \times α_2)$，我们将得到并后的的DBW。 但是请注意，与定理1中的$n_1+n_2$不同，现在是$n_1 n_2$。
+
+#### 4.2.2.2 补运算下的封闭性
+
+> Closure Under Complementation
+
+For deterministic automata on ﬁnite words, complementation is easy: the single run is rejecting iff its last state is not accepting, thus complementing a deterministic automaton can proceed by dualizing its acceptance condition: for an automaton with state space Q and set α of accepting states, the dual acceptance condition is ˜ α=Q\α, and it is easy to see that dualizing the acceptance condition of a deterministic automaton on ﬁnite words results in a deterministic automaton for the complement language. It is also easy to see that such a simple dualization does not work for DBWs. Indeed, a run of a Büchi automaton is rejecting iff it visits α only ﬁnitely often, which is different from requiring it to visit ˜ α inﬁnitely often. As a concrete example, consider the DBW A1 from Fig. 1. Recall that L(A1)={w:w has inﬁnitely many a’s}. An attempt to complement it by deﬁning the set of accepting states to be {q0} results in a DBW whose language is {w:w has inﬁnitely many b’s}, which does not complement L (A1). For example, the word (a·b)ω belongs to both languages. In this section we study the complementation problem for Büchi automata. We start with deterministic automata and show that while dualization does not work, their complementation is quite simple, but results in a nondeterministic automaton. We then move on to nondeterministic automata, and describe a complementation procedure for them.
+
+对于有限字的确定性自动机，补运算很容易：运行是拒绝的，当且仅当其最后一个状态不是可接受状态，因此可以通过对可接受条件进行反转来对确定性自动机进行补运算：对于具有状态空间$Q$并设置接受状态为$\alpha$的自动机，对偶的可接受条件为$\tilde{a}= Q \setminus \alpha$，并且很容易看出，将确定性自动机对有限词的接受条件反转就能得到补的语言的确定性自动机。还容易看到，这种简单的取反操作不适用于DBW。的确，如果Büchi自动机的一个运行仅有限次经常访问$\alpha$，则它是被拒绝的，这不同于要求它无限经常次访问$\tilde{a}$。作为一个具体的例子，请考察图1中的DBW $A_1$。回想一下，$\mathcal{L(A_1)}=\{w:w \ has \ inﬁnitely \ many \ a’s\}$。尝试通过将可接受状态集定义为$\{q_0\}$来对其求补，这将导致DBW的语言为$\{w:w \ has \ inﬁnitely \ many \ b’s\}$，并不能得到$\mathcal{L(A_1)}$的补。例如，字$(a·b)^{\omega}$同属于两种语言。在本节中，我们研究Büchi自动机的补运算问题。我们从确定性自动机开始，并表明虽然对偶化不起作用，但它们的补运算是相当简单的，但是会产生非确定性自动机。然后，我们继续考察非确定性自动机，并描述它们的补运算。
+
+Theorem 3 ([47]) Let A be a DBW withn states. There is an NBW A such that L (A)=Σω \L (A ), and A has at most 2n states.
+
+**定理3** 设$A$为具有$n$个状态的DBW。 有一个NBW $A'$，使得$\mathcal{L(A)}=\Sigma^{\omega} \setminus \mathcal{L(A)}$，并且$A$最多具有$2n$个状态。
+
+Proof Let A =Σ,Q,q0,δ,α. The NBWA should accept exactly all words w for which the single run of A on w visits α only ﬁnitely often. It does so by guessing a position from which no more visits of A to α take place. For that, A consists of two copies of A : one that includes all the states and transitions of A , and one that excludes the accepting states of A , and to which A moves when it guesses that no more states in α are going to be visited. All the states in the second copy are accepting. Formally, A=Σ,Q,Q  0,δ,α, where
+
+证明，设$A=\langle \Sigma,Q,q_0,\delta,\alpha \rangle$。NBW $A'$应该完全接受$A$有限经常次访问$\alpha$的那些字$w$。可以推测出一个位置，从这个位置往后$A$不再访问$\alpha$。 为此，$A'$由$A$的两个副本组成：一个副本包含$A$的所有状态和转移，一个副本排除$A$的可接受状态，并且当$A'$推测$\alpha$中没有更多的状态时，$A'$将移动到该副本。第二个副本中的所有状态都是可接受的。 形式上，$A'=\langle\Sigma,Q',Q_0',\delta',\alpha' \rangle$，其中
+
+- $Q'=(Q \times \{0\}) \cup ((Q \setminus \alpha) \times \{1\})$.
+- $Q_0'=\{\langle q_0,0 \rangle \}$.  
+- 对任意的$q \in Q$,$c \in \{0,1\}$以及$\sigma \in \Sigma$满足$\delta(q,\sigma)=q'$，我们有
+$$
+\begin{aligned}
+\delta'(\langle q,c\rangle,\sigma)=
+    \left[
+        \begin{array}{lr}
+            \{\langle q',0 \rangle , \langle q',1 \rangle\}
+            & if \ c=0 \ and \ q' \notin a, \\
+            \{\langle q',0 \rangle\}
+            & if \ c=0 \ and \ q' \in a, \\
+            \{\langle q',1 \rangle\}
+            & if \ c=1 \ and \ q' \notin a, \\
+            \varnothing
+            & if \ c=1 \ and \ q' \in a.
+        \end{array}
+    \right.
+\end{aligned}
+$$
+
+- $\alpha'=(Q \setminus \alpha) \times \{1\}$.
+
+Thus, A can stay in the ﬁrst copy forever, but in order for a run of A to be accepting, it must eventually move to the second copy, from where it cannot go back to the ﬁrst copy and must avoid states in α.
+
+因此，$A'$可以永远停留在第一个副本中，但是要使$A'$的一个运行被接受，它必须最终移至第二个副本，在那里不能返回第一个副本，并且必须避开$\alpha$中的状态 。
+
+The construction described in the proof of Theorem 3 can be appliedalso to nondeterministic automata. Since, however, A accepts a word w iff there exists a run of A on w that visits α only ﬁnitely often, whereas a complementing automaton should accept a word w iff all the runs of A on w visit α only ﬁnitely often, the construction has a one-sided error when applied to nondeterministic automata. This is not surprising, as the same difﬁculty exists when we complement nondeterministic automata on ﬁnite words. By restricting attention to deterministic automata, we guarantee that the existential and universal quantiﬁcation on the runs of A coincide. 
+
+定理3的证明中描述的构造也可以应用于非确定性自动机。 但是，$A'$接受字$w$，当且仅当$A$上存在一个和$w$呼应的运行仅有限经常次访问$\alpha$，而互补的自动机应接受字$w$，当且仅当$A$上所有和$w$呼应的运行仅有限经常次访问$\alpha$，所以，当将结构应用于非确定性自动机时，该结构存在一个单方面错误。 这不足为奇，因为当我们对有限字上的非确定性自动机求补时，存在着同样的困难。 通过将注意力集中在确定性自动机上，我们保证$A$的运行上存在量词和全称量词一致。
+
+We now turn to consider complementation for nondeterministic Büchi automata. In the case of ﬁnite words, one ﬁrst determinizes the automaton and then complements the result. An attempt to follow a similar plan for NBWs, namely at translation to a DBW and then an application of Theorem 3, does not work: as we shall see in Sect. 4.2.3, DBWs are strictly less expressive than NBWs, thus not all NBWs can be determinized. Nevertheless, NBWs are closed under complementation.
+
+现在，我们考虑对非确定性Büchi自动机的补运算。 在有限字的情况下，首先确定自动机，然后对结果求补。 尝试在NBW上用类似的方式，即先翻译DBW，然后再应用定理3，但这是行不通的：正如我们将在第4.2.3节中看到的那样，DBW的表达能力严格不如NBW，因此并非所有NBW都可以转换成确定性的。 尽管如此，NBW在补运算下仍是封闭的。
