@@ -247,3 +247,119 @@ The construction described in the proof of Theorem 3 can be appliedalso to nonde
 We now turn to consider complementation for nondeterministic Büchi automata. In the case of ﬁnite words, one ﬁrst determinizes the automaton and then complements the result. An attempt to follow a similar plan for NBWs, namely at translation to a DBW and then an application of Theorem 3, does not work: as we shall see in Sect. 4.2.3, DBWs are strictly less expressive than NBWs, thus not all NBWs can be determinized. Nevertheless, NBWs are closed under complementation.
 
 现在，我们考虑对非确定性Büchi自动机的补运算。 在有限字的情况下，首先确定自动机，然后对结果求补。 尝试在NBW上用类似的方式，即先翻译DBW，然后再应用定理3，但这是行不通的：正如我们将在第4.2.3节中看到的那样，DBW的表达能力严格不如NBW，因此并非所有NBW都可以转换成确定性的。 尽管如此，NBW在补运算下仍是封闭的。
+
+Efforts to develop a complementation construction for NBWs started in the early 1960s, motivated by decision problems for second-order logics. Büchi introduced a complementation construction that involved a complicated Ramsey-based combinatorial argument and a doubly-exponential blow-up in the state space [6]. Thus, complementing an NBW with n states resulted in an NBW with 22O(n) states.  In [70], Sistla et al. suggested an improved implementation of Büchi’s construction, with only 2O(n2) states, which is still not optimal.Only in [64], Safra introduced a determinization construction that involves an acceptance condition that is stronger than Büchi, and used it in order to present a 2O(nlogn) complementation construction,matching the known lower bound[54].The use of complementation in practice has led to a resurgent interest in the exact blow-up that complementation involves and the feasibility of the complementation construction (e.g., issues like whether the construction can be implemented symbolically, whether it is amenable to optimizations or heuristics—these are all important criteria that complementation constructions that involve determinization do not satisfy).In [33], Klarlund introduced an optimal complementation construction that avoids determinization. Rather, the states of the complementing automaton utilize progress measures—a generic concept for quantifying how each step of a system contributes to bringing a computation closer to its speciﬁcation.In [44], Kupferman and Vardi used ranks, which are similar to progress measures, in a complementation construction that goes via intermediate alternating co-Büchi automata. Below we describe the construction of [44] circumventing the intermediate alternating automata. 
+
+在二阶逻辑的决策问题的推动下，于1960年代初开始为NBW开发补结构。 Büchi提出了一种补结构，其中涉及到基于Ramsey的复杂组合论证和状态空间中的双指数爆炸[6]。 因此，求具有$n$个状态的NBW的补会得到具有$2^{2^{O(n)}}$个状态的NBW。在[70]中，Sistla等人。 建议对Büchi的结构进行改进的实现，只有$2^{O(n^2)}$个状态，不过这仍然不是最佳的。只有在[64]中，Safra引入了一个确定性结构，它包括了比Büchi更强的可接受条件，并用它来表示$2^{O(n \ \text{log}n)}$的补结构，这与已知的下界相匹配[54]。在实践中使用补运算已引起人们对补运算所涉及的确切的状态爆炸和补的构建可行性的兴趣（例如，诸如是否可以象征性地实现构造，是否适合优化或启发式等问题，这些都是涉及确定性的补构造不满足的重要标准）。在[33]中，Klarlund引入了避免确定性的最佳补结构。 相反，补自动机的状态利用progress measure——一种用于量化系统每个步骤如何有助于使计算更接近其规约的通用概念。在[44]中，Kupferman和Vardi在通过intermediate alternating co-Büchi自动机进行补的构造中使用了类似于progress measure的等级。 下面我们描述绕过intermediate alternating的自动机[44]的构造。
+
+Let A =Σ,Q,Q0,δ,αbe an NBW with n states. Let w=σ1·σ2·σ3···be a word in Σω. We deﬁne an inﬁnite DAG G that embodies all the possible runs of A on w. Formally, G=V,E, where
+
+令$A=\langle \Sigma,Q,Q_0,\delta,\alpha \rangle$是具有n个状态的NBW。 令$w=\sigma_1 \cdot \sigma_2 \cdot \sigma_3···$作为$\Sigma^\omega$中的一个单词。 我们定义了一个无限的DAG $G$，它体现了$A$在$w$上的所有可能运行。 形式上，$G=\langle V,E \rangle$，其中
+
+- $V \subseteq Q \times \mathbb{N}$是并集$\bigcup_{l\geq 0}(Q_l \times \{l\})$，其中对所有的$l \geq 0$，有$Q_{l+1}=\bigcup_{q \in Q_1} \delta(q,\sigma_{l+1})$。
+
+- $E \in \bigcup_{l \geq 0}(Q_l \times \{l\}) \times (Q_{l+1} \times \{l+1\})$，对所有的$l \geq 0$，我们有$E(\langle q,l \rangle , \langle q' , l+1 \rangle)$当且仅当$q' \in \delta(q,\sigma_{l+1})$。
+
+We refer to G as the run DAG of A on w. We say that a vertexq,lis a successor of a vertex q,l iff E(q,l,q,l). We say that q,l is reachable from q,l iff there exists a sequence q0,l0,q1,l1,q2,l2,...of successive vertices such that q,l=q0,l0, and there exists i ≥0 such that q,l=qi,l i. We say thata vertex q,l is an α-vertex iff q ∈α. Finally, we say that G is an accepting runDAG if G has a path with inﬁnitely many α-vertices. Otherwise, we say that G is rejecting. It is easy to see that A accepts w iff G is accepting.
+
+我们称$G$为$A$在$w$上的运行DAG。 我们说，顶点$\langle q',l' \rangle$是顶点$\langle q,l \rangle$的后继，当且仅当$E(\langle q,l \rangle , \langle q',l' \rangle)$。 我们称$\langle q',l' \rangle$是从$\langle q,l \rangle$可达的，当且仅当存在连续的顶点序列$\langle q_0,l_0 \rangle , \langle q_1,l_1 \rangle , \langle q_2,l_2 \rangle , ...$使得$\langle q,l \rangle = \langle q_0,l_0 \rangle$，并且存在$i \geq 0$使得$\langle q',l' \rangle = \langle q_i,l_i \rangle$。 我们说一个顶点$\langle q,l \rangle$是一个$\alpha$顶点，当且仅当$q \in \alpha$。 最后，我们说，如果$G$的路径具有无限多的$\alpha$顶点，则$G$是可接受的运行DAG。 否则，称$G$是拒绝的。 很容易发现，$A$可接受$w$当且仅当$G$是可接受的。
+
+For k ∈ N, let[k] denote the set {0,1,...,k}.Aranking for G is a function f :V →[2n]that satisﬁes the following two conditions: 
+
+对于$k \in \mathcal{N}$，令$[k]$表示集合$\{0,1,...,k\}$。$G$的阶是函数$f:V \to [2n]$，它满足以下两个条件：
+
+1. 对所有顶点$\langle q,l \rangle \in V$，如果$f(\langle q,l \rangle)$是奇数个，那么$q \notin a$。
+2. 对所有边$\langle\langle q,l \rangle, \langle q',l' \rangle\rangle \in E$，有$f(\langle q',l' \rangle) \leq f(\langle q,l \rangle)$。
+
+Thus, a ranking associates with each vertex in G a rank in [2n] so that the ranks along paths decrease monotonically, and α-vertices get only even ranks. Note that each path in G eventually gets trapped in some rank. We say that the ranking f is an odd ranking if all the paths of G eventually get trapped in an odd rank. Formally, f is odd iff for all paths q0,0,q1,1,q2,2,...in G, there is j ≥0 such that f(qj,j) is odd, and for all i≥1, we have f(qj+i,j+i)=f(qj,j). 
+
+因此，阶与$[2n]$中的$G$中的每个顶点相关联，从而沿着路径的阶是单调减少的，而$\alpha$顶点一定是偶数阶。 请注意，$G$中的每条路径最终都会进入某个阶。 我们说，如果$G$的所有路径最终都进入一个奇数阶中，则该阶$f$是一个奇数阶。 形式上，对于$G$中的所有路径$\langle q_0,0 \rangle, \langle q_1,1 \rangle, \langle q_2,2 \rangle ,...$，$f$是奇的当且仅当$j\geq 0$使得$f(\langle q_j,j \rangle$是奇的，对于所有$i \geq 1$，我们有$f(\langle q_{j+i},j+i \rangle)= f(\langle q_j,j \rangle)$。
+
+We are going to prove that G is rejecting iff it has an odd ranking. The difﬁcult direction is to show that if G is rejecting, then it has an odd ranking. Below we make some observations on rejecting run DAGs that help us with this direction. We say that a vertexq,lis ﬁnite in a DAG G⊆G iff only ﬁnitely many vertices in G are reachable from q,l. The vertex q,l is α-free in G iff all the vertices in G that are reachable from q,l are not α-vertices. Note that, in particular, an α-free vertex is not an α-vertex. We deﬁne an inﬁnite sequence G0 ⊇G1 ⊇G2 ⊇...of DAGs inductively as follows.
+
+我们将证明$G$是被拒绝的，前提是它的阶是奇数的。 困难的方式是展示如果$G$被拒绝，那么它的阶就是奇数的。 下面我们对拒绝运行DAG进行一些观察，这有助于我们朝这个方向推进。 我们说顶点$\langle q,l \rangle$在DAG $G' \subseteq G$中是有限的，当且仅当从$\langle q,l \rangle$只能到达有限个$G'$中的顶点。$G'$中的顶点$\langle q,l \rangle$是$\alpha-free$的，当且仅当从$\langle q,l \rangle$能到达的$G'$中的那些顶点全部都是$\alpha$顶点。 注意，特别地，$\alpha-free$顶点不是$\alpha$顶点。 我们通过归纳法定义DAG的无限序列$G_0 \supseteq G_1 \supseteq G_2 \supseteq ...$如下
+
+- $G_0=G$. 
+- 对$i \geq 0$，我们有$G_{2i+1}=G_{2i} \setminus \{\langle q,l \rangle:\langle q,l \rangle$在$G2i$中是有限的$\}$。
+- 对$i\geq 0$，我们有$G_{2i+2}=G_{2i+1} \setminus \{\langle q,l \rangle:\langle q,l\rangle$在$G_{2i+1}$中是$\alpha-free$的$\}$。
+
+Lemma 1 If G is rejecting, then for every i ≥0, there exists li such that for all l≥li, there are at most n−i vertices of the formq,lin G2i.
+
+**引理1** 如果$G$是拒绝的，则对于每一个$i \geq 0$，都存在一个$l_i$，这样对于所有$l \geq l_i$，$G_{2i}$中最多有$n-i$个$\langle q,l \rangle$形式的顶点。
+
+Proof We prove the lemma by an inductionon i. The case where  i=0 follows from the deﬁnition of G0 =G. Indeed, in G all levels l ≥0 have at mostn vertices of the form q,l. Assume that the lemma’s requirement holds for i; we prove it for i +1. Consider the DAG G2i. We distinguish between two cases. First, if G2i is ﬁnite,then G2i+1 isempty, G2i+2 is emptyas well, and weare done. Otherwise, we claim that there must be some α-free vertex in G2i+1.
+
+**证明** 我们通过归纳法证明引理。 从$G_0=G$的定义得出$i=0$的情况。 实际上，在$G$中，所有级别$l \leq 0$最多具有$n$个$\langle q,l \rangle$形式的顶点。 假设引理的要求适用于$i$；我们证明$i+1$。 考虑DAG $G_{2i}$。 我们区分两种情况。 首先，如果$G_{2i}$是有限的，那么$G_{2i+1}$是空的，$G_{2i+2}$也为空，并且已经完成。 否则，我们说$G_{2i+1}$中必须有一些$\alpha-free$的顶点。
+
+ To see this, assume, by way of contradiction, that G2i is inﬁnite and no vertex in G2i+1 is α-free. Since G2i is inﬁnite, G2i+1 is also inﬁnite. Also, each vertex in G2i+1 has at least one successor. Consider some vertex q0,l0 in G2i+1. Since, by the assumption, it is not α-free, there exists an α-vertex q 0,l 0 reachable from q0,l0.
+
+ 为了得到这一点，通过导出矛盾的方式，假设$G_{2i}$是无限的，并且$G_{2i+1}$中没有顶点是$\alpha-free$的。 由于$G_{2i}$是无限的，因此$G_{2i+1}$也是无限的。 同样，$G_{2i+1}$中的每个顶点至少具有一个后继。 考虑$G_{2i+1}$中的某个顶点$\langle q_0,l_0 \rangle$。 至此，根据假设，它不是$\alpha-free$的，因此存在一个从$\langle q_0,l_0 \rangle$可达的$\alpha$顶点$\langle q'_0,l'_0\rangle$。
+
+ Letq1,l1 be a successorof q .By the assumption, q1,l1 is also not α-free. Hence, there exists an α-vertex q 1,l 1reachable fromq1,l1. Letq2,l2be a successor ofq 1,j 1. By theassumption, q2,l2 is also not α-free. Thus, we can continue similarly and construct an inﬁnite sequence of verticesqj,lj,q j,l jsuch that for all j, the vertex q j,l j is an α-vertex reachable from qj,lj, and qj+1,lj+1 is a successor of q j,l j. Such a sequence, however, corresponds to a path in G with inﬁnitely many α-vertices, contradicting the assumption that G is rejecting.
+ 
+ 设$\langle q_1,l_1 \rangle$为$\langle q'_0,l'_0 \rangle$的后继。根据假设，$q_1,l_1$也不是$\alpha-free$的。 因此，存在可从$\langle q_1,l_1 \rangle$到达的$\alpha$顶点$\langle q_1',l_1' \rangle$。 令$\langle q_2,l_2 \rangle$是$\langle q_1',l_1' \rangle$的后继。 根据假设，$\langle q_2,l_2 \rangle$也不是$\alpha-free$的。 因此，我们可以类似地继续并构造顶点$\langle q_j,l_j \rangle$，$\langle q_j',l_j' \rangle$的无限序列，使得对于所有$j$而言，顶点$\langle q_j',l_j' \rangle$是一个从$\langle q_j,l_j \rangle$可达的$\alpha$顶点，并且$\langle q_{j+1},l_{j+1} \rangle$是$\langle q_j',l_j' \rangle$的后继。 但是，这样的序列对应于$G$中具有无限多个$\alpha$顶点的路径，这与“$G$是拒绝的”这个假设相矛盾。
+
+ So, letq,lbe an α-free vertex in G2i+1. We claim that taking li+1=max{l,li} satisﬁes the requirement of the lemma. That is, we claim that for all j ≥max{l,li}, there are at most n−(i +1) vertices of the form q,j in G2i+2. Since q,l is in G2i+1, it is not ﬁnite in G2i. Thus, there are inﬁnitely many vertices in G2i that are reachable fromq,l. Hence, by König’s Lemma, G2i contains an inﬁnite path q,l,q1,l+1,q2,l+2,....
+
+因此，令$\langle q,l \rangle$为$G_{2i+1}$中$\alpha-free$的顶点。 我们称取$l_{i+1}=max\{l,l_i\}$满足引理的要求。 也就是说，我们称对于所有$j \geq max\{l，l_i\}$，在$G_{2i+2}$中至多有$n-(i+1)$个$\langle q,j \rangle$形式的顶点。 由于$\langle q,l \rangle$在$G_{2i+1}$中，因此在$G_{2i}$中不是有限的。 因此，在$G_{2i}$中无限多的顶点可以从$\langle q,l \rangle$到达。 因此，根据柯尼希（König）的引理，$G_{2i}$包含无限路径$\langle q,l \rangle ,\langle q_1,l+1 \rangle,\langle q_2,l+2 \rangle,...$
+
+
+For all k ≥1, the vertex qk,l+k has inﬁnitely many vertices reachable from it in G2i and thus, it is not ﬁnite in G2i. Therefore, the path q,l,q1,l+1,q2,l+2,...exists also in G2i+1. Recall that q,l is α-free. Hence, being reachable from q,l, all the vertices qk,l+k in the path are α-free as well. Therefore, they are not in G2i+2. It follows that for all j ≥l, the number of vertices of the formq,jin G2i+2 is strictly smaller than their number in G2i. Hence, by the induction hypothesis, we are done.
+
+对于所有$k \geq 1$，顶点$\langle q_k,l+k \rangle$在$G_{2i}$中可无限地到达其顶点，因此在$G_{2i}$中不是有限的。 因此，路径$\langle q,l \rangle ,\langle q_1,l+1 \rangle,\langle q_2,l+2 \rangle,...$也存在于$G_{2i+1}$中。 回想一下$\langle q,l \rangle ,\langle q_1,l+1 \rangle,\langle q_2,l+2 \rangle,...$是$\alpha-free$的。 因此，从$\langle q,l \rangle$可以到达，路径中的所有顶点$\langle q_k,l+k \rangle$也是$\alpha-free$的。 因此，它们不在G_{2i+2}中。 因此，对于所有$j \geq l$，$G_{2i+2}$中形式为$\langle q,j \rangle$的顶点的数量严格小于$G_{2i}$中的顶点的数量。 因此，通过归纳假设，我们完成了证明。
+
+Note that, in particular, by Lemma 1, ifG is rejecting then G2n is ﬁnite. Hence the following corollary.
+
+请注意，尤其是引理1，如果$G$是拒绝的，则$G_{2n}$是有限的。 因此，有以下推论。
+
+Corollary 1 If G is rejecting then G2n+1 is empty.
+
+**推论1** 如果$G$是拒绝的，则$G_{2n+1}$为空。
+
+We can now prove the main lemma required for complementation , which reduces the fact that all the runs of A on w are rejecting to the existence of an odd ranking for the run DAG of A on w.
+
+现在，我们可以证明互补所需要的主要引理，这减少了$A$对$w$的所有运行都拒绝存在$A$对$w$的DAG运行的阶是奇数的这一事实。
+
+Lemma 2 An NBW A rejects a word w iff there is an odd ranking for the run DAG of A on w.
+
+**引理2** NBW $A$拒绝字$w$当且仅当NBW对$A$的运行DAG在$w$上的阶为奇数。
+
+Proof Let G betherun DAG ofA on w.We ﬁrst claim that if there is an odd ranking for G, then A rejects w. To see this, recall that in an odd ranking, every path in G eventually gets trapped in an odd rank. Hence, as α-vertices get only even ranks, it follows that all the paths of G,and thus all the possible runs of A on w, visit α only ﬁnitely often.
+
+证明让$G$成为$w$上A的DAG。我们首先宣称，如果$G$的排名为奇数，则$A$拒绝$w$。 为此，请记住，在奇数阶中，$G$中的每条路径最终都会陷入一个奇数阶。 因此，由于$\alpha$顶点仅获得偶数阶，因此可以得出，$G$的所有路径以及$A$在$w$上的所有可能运行都仅有限经常次访问$\alpha$。
+
+Assume now that A rejects w. We describe an odd ranking for G. Recall that if A rejects w, then G is rejecting and thus, by Corollary 1, each vertexq,lin G is removed from Gj, for some 0≤j ≤2n. Thus, there is 0≤i ≤n such thatq,lis ﬁnite in G2i or α-free in G2i+1. Given a vertexq,l, we deﬁne the rank ofq,l, denoted f(q,l), as follows.
+
+现在假设$A$拒绝$w$。 我们描述了$G$的奇数阶。回想一下，如果$A$拒绝$w$，则$G$是拒绝的，因此，根据推论1，$G$中的每个顶点$\langle q,l \rangle$对于$0 \leq j \leq 2n$均从$G_j$中删除。 因此，存在$0 \leq i \leq n$，使得$\langle q,l \rangle$在$G_{2i}$中是有限的，在$G_{2i+1}$中是$\alpha-free$的。 给定顶点$\langle q,l \rangle$，我们定义$\langle q,l \rangle$的阶，表示为$f(q,l)$，如下所示。
+
+$$
+\begin{aligned}
+f(q,l)=
+    \left[
+        \begin{array}{lr}
+            2i
+            & if \ \langle q,l \rangle \ is \ finite \ in \ G_{2i}. \\
+            2i+1
+            & if \ \langle q,l \rangle \ is \ \alpha-free \ in \ G_{2i+1}.
+        \end{array}
+    \right.
+\end{aligned}
+$$
+
+We claim that f is an odd ranking for G. First, by Lemma 1, the subgraph G2n is ﬁnite. Hence, the maximal rank that a vertex can get is 2n. Also, since an α-free vertex cannot be an α-vertex and f(q,l) is odd only for α-free q,l, the ﬁrst condition for f being a ranking holds.
+
+
+我们认为f是G的奇数阶。首先，根据引理1，子图$G_{2n}$是有限的。 因此，顶点可获得的最大阶为$2n$。 同样，由于$\alpha-free$的顶点不能是$\alpha$顶点，并且$f(\langle q,l \rangle)$仅对$\alpha-free$的$\langle q,l \rangle$是奇数阶，因此$f$关于阶的第一个条件成立。
+
+ We proceed to the second condition. We ﬁrst argue (and a proof proceeds easily by an induction on i) that for every vertex q,l in G and rank i ∈[2n], ifq,l / ∈Gi, then f(q,l) i. Now, we prove thatfor every two vertices q,l and q,l in G, ifq,l is reachable from q,l (inparticular,if q,l,q,l∈E),then f(q,l)≤f(q,l).
+
+ 我们进入第二个条件。 我们首先讨论（对$i$使用归纳法很容易得到证明）的是，对于$G$中每个顶点$\langle q,l \rangle$和秩$i \in [2n]$，如果$\langle q,l \rangle \notin G_i$，则$f(q,l) < i$。 现在，我们证明对于$G$中的每两个顶点$\langle q,l \rangle$和$\langle q',l' \rangle$，如果$\langle q',l' \rangle$可以从$\langle q,l \rangle$到达（特别是，如果$\langle \langle q,l \rangle,\langle q,l \rangle \rangle \in E$），则$f(q',l') \leq f(q,l)$。
+
+ Assumethat f(q,l)=i. We distinguish between two cases. If i is even, in which case q,l is ﬁnite in Gi, then eitherq,lis not in Gi, in which case, by the above claim, its rank is at most i−1,orq,lis in Gi, in which case, being reachable fromq,l, it must be ﬁnite in Gi and have rank i.
+ 
+ 
+ 假设$f(q,l)=i$。我们区分两种情况。 如果$i$是偶数，则$\langle q,l \rangle$在$G_i$中是有限的，若$\langle q',l' \rangle$不在$G_i$中，在这种情况下，根据上述主张，其阶最多为$i-1$。 若$\langle q',l' \rangle$在$G_i$中，在这种情况下，可以从$\langle q,l \rangle$到达，它必须在$G_i$中是有限的，并且阶为$i$。
+
+  If i is odd, in which case q,l is α-free in Gi, then either q,l is not in Gi, in which case, by the above claim, its rank is at most i−1, or q,l is in Gi, in which case, being reachable from q,l, it must byα-free in Gi and have rank i. 
+
+  如果$i$是奇数，则$\langle q,l \rangle$在$G_i$中是$\alpha-free$的，则$\langle q',l' \rangle$不在Gi中，在这种情况下，根据上述声明，其阶最多为$i-1$ ，或者$\langle q',l' \rangle$在Gi中，在这种情况下，可以从$\langle q,l \rangle$到达，它在$G_i$中必须不含$\alpha$，并且阶为$i$。
